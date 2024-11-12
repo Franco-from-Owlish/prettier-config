@@ -1,0 +1,40 @@
+{
+  "name": "@franco-from-gcc/prettier",
+  "type": "module",
+  "scripts": {
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
+    "release": "lerna version --yes",
+    "publish": "yarn workspaces foreach -A npm publish --tolerate-republish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Franco-from-Owlish/prettier-config.git"
+  },
+  "homepage": "https://github.com/Franco-from-Owlish/prettier-config#readme",
+  "license": "UNLICENSED",
+  "packageManager": "yarn@4.5.1",
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "lerna": "^8.1.9",
+    "prettier": "^3.3.3"
+  },
+  "workspaces": [
+    "projects/*"
+  ],
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "scope-enum": [
+        2,
+        "always",
+        [
+          "config"
+        ]
+      ]
+    }
+  }
+}
