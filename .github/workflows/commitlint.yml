@@ -1,0 +1,35 @@
+name: CI
+
+on: [push, pull_request]
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install required dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y git curl
+      - name: Install commitlint
+        run: yarn install
+      - name: Print versions
+        run: |
+          git --version
+          node --version
+          yarn --version
+          yarn dlx -q commitlint --version
+
+      - name: Validate current commit (last commit) with commitlint
+        if: github.event_name == 'push'
+        run: yarn dlx -q commitlint --last --verbose
+
+      - name: Validate PR commits with commitlint
+        if: github.event_name == 'pull_request'
+        uses: wagoid/commitlint-github-action@v6
